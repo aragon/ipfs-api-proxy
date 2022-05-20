@@ -12,15 +12,14 @@ const logger = new Logger("main");
 logger.debug("Adding routes");
 
 const ipfsBackend = process.env.IPFS_BACKEND || "http://127.0.0.1:5001";
-const maxBodySize = process.env.MAX_BODY_SIZE
-  ? parseInt(process.env.MAX_BODY_SIZE)
-  : 1024 * 1024 * 10;
+const maxBodySize = parseInt(process.env.MAX_BODY_SIZE || "10485760"); // 1024 * 1024 * 10 as default value
 const allowDirectories = process.env.ALLOW_DIRECTORIES === "true";
-const allowedMimeTypes = process.env.ALLOWED_MIMETYPES
-  ? process.env.ALLOWED_MIMETYPES.split(",").map((type) => type.trim())
-  : ['*'];
+const allowedMimeTypes = process.env.ALLOWED_MIMETYPES?.split(",").map((type) =>
+  type.trim()
+) || ["*"];
 const allowedApiKeys =
   process.env.ALLOWED_API_KEYS?.split(",").map((key) => key.trim()) || [];
+
 logger.info(`IPFS backend: ${ipfsBackend}`);
 logger.info(`Max body size: ${maxBodySize} bytes`);
 logger.info(`Allow directories: ${allowDirectories}`);

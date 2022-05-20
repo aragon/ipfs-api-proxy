@@ -50,13 +50,18 @@ export function addRouteMiddleware(
           file = Buffer.concat([file, chunk]);
         }
       });
-      part.on("end", async () => {
-        if (file && !(await isAllowedMimeType(file, allowedMimeTypes))) {
-          form.emit("error", {
-            statusCode: 400,
-            message: "File type not allowed",
-          });
+      part.on("end", () => {
+        if (!file) {
+          return;
         }
+        isAllowedMimeType(file, allowedMimeTypes).then((allowed) => {
+          if (!allowed) {
+            form.emit("error", {
+              statusCode: 400,
+              message: "File type not allowed",
+            });
+          }
+        });
       });
     });
 
@@ -70,7 +75,7 @@ export function addRouteMiddleware(
       }
     });
 
-    form.on("close", async () => {
+    form.on("close", () => {
       logger.debug(`Form closed with ${form.bytesReceived} bytes received`);
       req.body = dataBuffer;
       next();
