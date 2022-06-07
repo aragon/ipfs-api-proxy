@@ -19,4 +19,4 @@ This small proxy allows a more granular controler over the ipfs api.
 | MAX_BODY_SIZE     | max total allowed body size (includes all files uploaded)                   | 1024 \* 1024 \* 10    |
 | ALLOW_DIRECTORIES | Allow to upload directories                                                 | false                 |
 | ALLOWED_MIMETYPES | Allowed MIMETypes                                                           | ['*']                 |
-| API_KEYS          | List of strings which are allowed to be used in the `X-API-KEY` HTTP header | []                    |
+| ALLOWED_API_KEYS  | List of strings which are allowed to be used in the `X-API-KEY` HTTP header | []                    |
