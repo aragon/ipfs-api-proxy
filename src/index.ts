@@ -34,8 +34,9 @@ app.post(
   proxyRequest(ipfsBackend)
 );
 
-app.post("/api/v0/get", 
-apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
+app.post("/api/v0/get", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
+
+app.post("/api/v0/id", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
 
 app.listen(process.env.PORT, () => {
   logger.info(`Server listening on port ${process.env.PORT}`);
