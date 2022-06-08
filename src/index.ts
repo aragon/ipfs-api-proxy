@@ -16,7 +16,7 @@ const maxBodySize = parseInt(process.env.MAX_BODY_SIZE || "10485760"); // 1024 *
 const allowDirectories = process.env.ALLOW_DIRECTORIES === "true";
 const allowedMimeTypes = process.env.ALLOWED_MIMETYPES?.split(",").map((type) =>
   type.trim()
-) || ["*"];
+) || [".*"];
 const allowedApiKeys =
   process.env.ALLOWED_API_KEYS?.split(",").map((key) => key.trim()) || [];
 
@@ -34,7 +34,8 @@ app.post(
   proxyRequest(ipfsBackend)
 );
 
-app.post("/api/v0/get", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
+app.post("/api/v0/get", 
+apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
 
 app.listen(process.env.PORT, () => {
   logger.info(`Server listening on port ${process.env.PORT}`);
