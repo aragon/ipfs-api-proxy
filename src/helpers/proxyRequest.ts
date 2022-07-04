@@ -12,7 +12,7 @@ export function proxyRequest(ipfsBackend: string) {
     axios({
       method: req.method,
       url: `${ipfsBackend}${req.originalUrl}`,
-      headers: req.headers as any,
+      headers: {...req.headers as any, origin: 'localhost'},
       data: req.body,
     })
       .then((proxyResponse) => {
