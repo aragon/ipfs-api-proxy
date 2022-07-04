@@ -35,6 +35,7 @@ app.post(
 );
 
 app.post("/api/v0/cat", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
+app.post("/api/v0/get", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
 
 app.post("/api/v0/id", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
 
