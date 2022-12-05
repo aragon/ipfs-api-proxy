@@ -36,7 +36,7 @@ export function pinRouteMiddlware(
       ) {
         res.contentType("text").status(500).send("Something went wrong");
       }
-      logger.error(JSON.stringify(err.response.data));
+      logger.error(JSON.stringify(err));
     }
   };
 }
