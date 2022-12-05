@@ -31,7 +31,7 @@ export function pinRouteMiddlware(
       next();
     } catch (err: any) {
       if (
-        err.response.data && err.response.data &&
+        err.response && err.response && err.response.data &&
         err.response.data.Type === "error"
       ) {
         res.contentType("text").status(500).send("Something went wrong");
