@@ -17,7 +17,12 @@ export function pinRouteMiddlware(
     try {
       const cid = req.query.arg;
       const response = await axios.post(`${ipfsBackend}/api/v0/cat?arg=${cid}`);
-      const responseBuffer = Buffer.from(response.data);
+      let responseBuffer: Buffer;
+      if (typeof response.data != "string") {
+        responseBuffer = Buffer.from(JSON.stringify(response.data));
+      } else {
+        responseBuffer = Buffer.from(response.data);
+      }
       const allowed = await isAllowedMimeType(responseBuffer, allowedMimeTypes);
       if (!allowed) {
         res.contentType("text").status(400).send("File type not allowed");
@@ -37,6 +42,7 @@ export function pinRouteMiddlware(
         res.contentType("text").status(500).send("Something went wrong");
       }
       logger.error(JSON.stringify(err));
+      res.contentType("text").status(500).send(err);
     }
   };
 }
