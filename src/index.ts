@@ -42,6 +42,7 @@ app.post("/api/v0/id", apiAuth(allowedApiKeys), proxyRequest(ipfsBackend));
 
 app.post(
   "/api/v0/pin/add",
+  apiAuth(allowedApiKeys),
   pinRouteMiddlware(maxBodySize, allowedMimeTypes, ipfsBackend),
   proxyRequest(ipfsBackend),
 );
