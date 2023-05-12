@@ -6,13 +6,13 @@ import Logger from "../helpers/logger";
 export function pinRouteMiddlware(
   maxFileSize: Number,
   allowedMimeTypes: string[],
-  ipfsBackend: string,
+  ipfsBackend: string
 ): Express.Handler {
   const logger = new Logger("pinRouteMiddleware");
   return async (
     req: Express.Request,
     res: Express.Response,
-    next: Express.NextFunction,
+    next: Express.NextFunction
   ) => {
     try {
       const cid = req.query.arg;
@@ -36,10 +36,13 @@ export function pinRouteMiddlware(
       next();
     } catch (err: any) {
       if (
-        err.response && err.response && err.response.data &&
+        err.response &&
+        err.response &&
+        err.response.data &&
         err.response.data.Type === "error"
       ) {
         res.contentType("text").status(500).send("Something went wrong");
+        return;
       }
       logger.error(JSON.stringify(err));
       res.contentType("text").status(500).send(err);
