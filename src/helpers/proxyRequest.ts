@@ -23,7 +23,7 @@ export function proxyRequest(ipfsBackend: string) {
       })
       .catch((e) => {
         logger.error(`Failed to proxy request: ${e.message}`);
-        res.contentType("text").status(500).send(e);
+        res.contentType("text").status(500).send('Something went wrong! Please try again...');
       });
   };
 }

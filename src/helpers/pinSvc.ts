@@ -68,7 +68,7 @@ export function pin(pinSvcBackend: string, pinSvcAuth: string) {
         .send(resp.data);
     } catch (e: any) {
       logger.error(`Request failed: ${e.message}`);
-      res.contentType("text").status(500).send(e.message);
+      res.contentType("text").status(500).send('Something went wrong! Please try again...');
     }
   };
 }

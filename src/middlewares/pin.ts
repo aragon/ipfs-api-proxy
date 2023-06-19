@@ -45,7 +45,7 @@ export function pinRouteMiddlware(
         return;
       }
       logger.error(JSON.stringify(err));
-      res.contentType("text").status(500).send(err);
+      res.contentType("text").status(500).send('Something went wrong! Please try again...');
     }
   };
 }
