@@ -1,5 +1,5 @@
 import axios from "axios";
-import Express from "express";
+import Express, { response } from "express";
 import Logger from "./logger";
 
 export function proxyRequest(ipfsBackend: string) {
@@ -14,6 +14,7 @@ export function proxyRequest(ipfsBackend: string) {
       url: `${ipfsBackend}${req.originalUrl}`,
       headers: {...req.headers as any, origin: 'localhost', referer: ''},
       data: req.body,
+      responseType: 'arraybuffer'
     })
       .then((proxyResponse) => {
         res
