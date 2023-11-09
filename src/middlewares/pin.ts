@@ -21,6 +21,15 @@ export function pinRouteMiddlware(
         undefined,
         { responseType: "arraybuffer" }
       );
+
+      if (Buffer.from(response.data).byteLength === 0) {
+        logger.info(
+          `Buffer is empty. allowing it and ignoring the mime type check`
+        );
+        next();
+        return;
+      }
+
       const allowed = await isAllowedMimeType(response.data, allowedMimeTypes);
       if (!allowed) {
         res.contentType("text").status(400).send("File type not allowed");
