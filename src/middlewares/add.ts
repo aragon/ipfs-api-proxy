@@ -1,7 +1,7 @@
 import Express from "express";
 import Logger from "../helpers/logger";
 import multiparty from "multiparty";
-import {isAllowedMimeType} from "../helpers/mimetype";
+import { isAllowedMimeType } from "../helpers/mimetype";
 
 interface Error {
   statusCode: number;
@@ -32,6 +32,7 @@ export function addRouteMiddleware(
     });
 
     form.on("part", (part) => {
+      const filename = part.filename;
       logger.debug(`Part received with name ${part.name}`);
       if (!allowDirectories) {
         if (part.headers["content-type"] == "application/x-directory") {
@@ -54,7 +55,7 @@ export function addRouteMiddleware(
         if (!file) {
           return;
         }
-        isAllowedMimeType(file, allowedMimeTypes).then((allowed) => {
+        isAllowedMimeType(file, allowedMimeTypes, filename).then((allowed) => {
           if (!allowed) {
             form.emit("error", {
               statusCode: 400,
