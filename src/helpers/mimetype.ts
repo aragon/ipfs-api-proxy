@@ -12,12 +12,12 @@ export function isAllowedMimeType(
     .then((fileType) => {
       logger.debug(`Got fileType ${fileType}`);
       let fileTypeWithDefault: string | undefined = fileType?.mime;
-  
+
       if (!fileTypeWithDefault) {
         const extension = filename.split(".").pop();
-        logger.debug(`Found file extension .${extension}`)
+        logger.debug(`Found file extension .${extension}`);
         switch (extension) {
-          case "json":
+          default:
             try {
               JSON.parse(file.toString());
               fileTypeWithDefault = "application/json";
@@ -25,7 +25,6 @@ export function isAllowedMimeType(
             } catch (e) {
               // ignore
             }
-          default:
             fileTypeWithDefault = "text/plain";
         }
       }
